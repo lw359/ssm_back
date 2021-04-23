@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/util"
+       xmlns:contex="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+        <!--扫描spring注解：排除掉@Controller-->
+        <contex:component-scan base-package="com">
+                <contex:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"></contex:exclude-filter>
+        </contex:component-scan>
+
+        <!--加载属性文件-->
+<!--        <contex:property-placeholder location="classpath*:db.properties"></contex:property-placeholder>-->
+
+        <bean class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
+                <property name="location" value="classpath:db.properties"></property>
+        </bean>
+
+        <!--创建数据源
+        相当于：DruidDataSource dataSource = new DruidDataSource()
+        -->
+        <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+                <property name="driverClassName" value="${driverClassName}"></property>
+                <property name="url" value="${url}"></property>
+                <property name="username" value="${username}"></property>
+                <property name="password" value="${password}"></property>
+        </bean>
+
+
+        <!--创建SqlSessionFactory对象-->
+        <bean id="sqlSessionFactory"
+              class="com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean">
+                <property name="dataSource" ref="dataSource"></property>
+                <property name="configLocation" value="classpath:mybatis-config.xml"/>
+                <property name="typeAliasesPackage" value="com.guigu.pojo"/>
+                <property name="plugins">
+                        <array>
+                                <!--				<bean class="com.github.pagehelper.PageInterceptor">-->
+                                <!--					<property name="properties">-->
+                                <!--						<value>-->
+                                <!--							helperDialect=mysql-->
+                                <!--						</value>-->
+                                <!--					</property>-->
+                                <!--				</bean>-->
+                        </array>
+                </property>
+        </bean>
+
+        <!--创建扫描mapper的代理器工厂
+                作用：扫描指定的接口，并且自动生成接口的实现类
+                      并返回给spring容器
+        -->
+        <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+                <!--配置要扫描的mapper接口-->
+                <property name="basePackage" value="com.guigu.mapper"></property>
+                <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+        </bean>
+
+
+        <!-- 配置shiro -->
+
+        <!--1.配置Realm  JdbcRealm  or   自定义Realm-->
+       <!-- <bean id="myRealm" class="com.guigu.realm.MyRealm">
+                <property name="credentialsMatcher" ref="credentialsMatcher"></property>
+        </bean>-->
+
+        <!--2. 配置安全管理器-->
+        <!--<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+                <property name="realm" ref="myRealm"></property>
+                <property name="rememberMeManager" ref="rememberMeManager"></property>
+                <property name="cacheManager" ref="cacheManager"></property>
+         </bean>-->
+
+        <!--3. 配置过滤器规则 -->
+       <!-- <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+                &lt;!&ndash;loginUrl   :当你访问了一个需要认证后才能访问的资源，状态：没认证 &ndash;&gt;
+                <property name="loginUrl" value="login.jsp"></property>
+                <property name="securityManager" ref="securityManager"></property>
+                <property name="unauthorizedUrl" value="404.jsp"></property>
+                &lt;!&ndash; 指定过滤规则&ndash;&gt;
+                <property name="filterChainDefinitions">
+                        <value>
+                                /login*=anon  &lt;!&ndash; 匿名访问&ndash;&gt;
+                                /js/**=anon
+                                /css/**=anon
+                               &lt;!&ndash; /userlist.jsp=roles[超级管理员]&ndash;&gt;
+                                &lt;!&ndash;/userlist.jsp=perms[userMgr:search]&ndash;&gt;
+                                /**=user  &lt;!&ndash;除开上面的页面，其他根路径下资源都需要认证才能访问 &ndash;&gt;
+                        </value>
+                </property>
+
+        </bean>-->
+
+        <!-- MD5匹配器-->
+       <!-- <bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+             <property name="hashAlgorithmName" value="md5"></property>
+             <property name="hashIterations" value="5"></property>
+        </bean>-->
+
+
+        <!-- Remember Me-->
+        <!--手动指定cookie-->
+        <!--<bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+                <constructor-arg value="rememberMe"/>
+                <property name="httpOnly" value="true"/>
+                <property name="maxAge" value="604800"/>&lt;!&ndash; 7天   秒为单位 &ndash;&gt;
+        </bean>-->
+
+        <!-- rememberMe管理器 -->
+       <!-- <bean id="rememberMeManager"
+              class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+                &lt;!&ndash;注入自定义cookie(主要是设置寿命, 默认的一年太长)&ndash;&gt;
+                <property name="cookie" ref="rememberMeCookie"/>
+        </bean>-->
+
+        <!--shiro注解-->
+        <!-- 开启shiro注解支持-->
+       <!-- <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"></bean>
+        <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+              depends-on="lifecycleBeanPostProcessor" />
+
+        <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+                <property name="securityManager" ref="securityManager"></property>
+        </bean>-->
+
+        <!--定义需要特殊处理的异常，用类名或者完全路径作为key，异常页面作为值 -->
+        <!-- shiro权限异常处理-->
+       <!-- <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+                <property name="exceptionMappings">
+                        <props>
+                                <prop key="org.apache.shiro.authz.UnauthorizedException">redirect:/404.jsp</prop>
+                        </props>
+                </property>
+        </bean>
+-->
+
+        <!-- 进行缓存的操作配置 -->
+      <!--  <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+                <property name="cacheManagerConfigFile" value="classpath:ehcache.xml"/>
+        </bean>-->
+
+</beans>

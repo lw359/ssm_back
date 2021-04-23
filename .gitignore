@@ -1,0 +1,4 @@
+# Project exclude paths
+/ssm_dao/target/
+/ssm_domain/target/
+/ssm_web/target/
