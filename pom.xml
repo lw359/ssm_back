@@ -189,7 +189,7 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus</artifactId>
-            <version>2.1.9</version>
+            <version>3.2.0</version>
         </dependency>
 
         <!-- 简化开发   提供了注解，可以通过注解在实体类创建
