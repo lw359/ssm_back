@@ -1,0 +1,159 @@
+Index: ssm_web/src/main/java/com/guigu/controller/gys/GysXxi.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.guigu.controller.gys;\r\n\r\nimport com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;\r\nimport com.baomidou.mybatisplus.core.metadata.IPage;\r\nimport com.baomidou.mybatisplus.extension.plugins.pagination.Page;\r\nimport com.guigu.pojo.Goods;\r\nimport com.guigu.service.gys.GoodsService;\r\nimport com.guigu.service.gys.serviceImpl.GoodsServiceImpl;\r\nimport org.springframework.beans.factory.annotation.Autowired;\r\nimport org.springframework.stereotype.Controller;\r\nimport org.springframework.util.StringUtils;\r\nimport org.springframework.web.bind.annotation.CrossOrigin;\r\nimport org.springframework.web.bind.annotation.RequestMapping;\r\nimport org.springframework.web.bind.annotation.RequestParam;\r\nimport org.springframework.web.bind.annotation.RestController;\r\n\r\n@RestController\r\n@CrossOrigin\r\npublic class GysXxi {\r\n\r\n    @Autowired\r\n    GoodsService goodsService;\r\n\r\n        //查询所有数据\r\n        @RequestMapping(\"/showAll.action\")\r\n        @CrossOrigin\r\n        public IPage<Goods> showAll(@RequestParam(value = \"pageno\",defaultValue = \"1\") int pageno,\r\n                                    @RequestParam(value = \"pagesize\",defaultValue = \"5\")int pagesize,\r\n                                    Goods goods){\r\n//组装查询条件对象\r\n            QueryWrapper<Goods> queryWrapper =new QueryWrapper<Goods>();\r\n            if(!StringUtils.isEmpty(goods.getGoodsName())){\r\n                queryWrapper.like(\"name\",goods.getGoodsName());  // where  name like '%val%'\r\n            }\r\n            queryWrapper.orderByDesc(\"spId\");  //根据id列进行排序\r\n            IPage<Goods>  iPage= goodsService.page(new Page<Goods>(pageno,pagesize),queryWrapper);\r\n                return iPage;\r\n        }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ssm_web/src/main/java/com/guigu/controller/gys/GysXxi.java b/ssm_web/src/main/java/com/guigu/controller/gys/GysXxi.java
+--- a/ssm_web/src/main/java/com/guigu/controller/gys/GysXxi.java	(revision 4e4a77e8d56d0c6f46a5efe59c08f7d38fe6a8ad)
++++ b/ssm_web/src/main/java/com/guigu/controller/gys/GysXxi.java	(date 1620617743621)
+@@ -14,6 +14,8 @@
+ import org.springframework.web.bind.annotation.RequestParam;
+ import org.springframework.web.bind.annotation.RestController;
+ 
++import java.util.Date;
++
+ @RestController
+ @CrossOrigin
+ public class GysXxi {
+@@ -27,13 +29,40 @@
+         public IPage<Goods> showAll(@RequestParam(value = "pageno",defaultValue = "1") int pageno,
+                                     @RequestParam(value = "pagesize",defaultValue = "5")int pagesize,
+                                     Goods goods){
+-//组装查询条件对象
++                //组装查询条件对象
+             QueryWrapper<Goods> queryWrapper =new QueryWrapper<Goods>();
+             if(!StringUtils.isEmpty(goods.getGoodsName())){
+                 queryWrapper.like("name",goods.getGoodsName());  // where  name like '%val%'
+             }
+-            queryWrapper.orderByDesc("spId");  //根据id列进行排序
++            queryWrapper.orderByAsc("spId");  //根据id列进行排序
+             IPage<Goods>  iPage= goodsService.page(new Page<Goods>(pageno,pagesize),queryWrapper);
+                 return iPage;
+         }
++
++        //根据id查询数据用于编辑
++    @RequestMapping("querySpbyid.action")
++        public Goods querySpbyid (int id){
++        Goods goods = goodsService.getById(id);
++        return goods;
++    }
++
++    //根据id删除数据用于
++    @RequestMapping("deleteSpbyid.action")
++    public int deleteSpbyid (int id){
++        int i = goodsService.DeleteById(id);
++        return i;
++    }
++    //修改
++    @RequestMapping("xiugaiSp.action")
++    public int xiugaiSp (Goods goods){
++        int update = goodsService.Update(goods);
++        return update;
++    }
++
++    @RequestMapping("addSp.action")
++    public int addgoods (Goods goods){
++            goods.setYsTime(new Date());
++        int add = goodsService.add(goods);
++        return add;
++    }
+ }
+Index: pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\"\r\n         xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n         xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\r\n    <modelVersion>4.0.0</modelVersion>\r\n\r\n    <groupId>com.guigu</groupId>\r\n    <artifactId>ssm_back</artifactId>\r\n    <packaging>pom</packaging>\r\n    <version>1.0-SNAPSHOT</version>\r\n    <modules>\r\n        <module>ssm_domain</module>\r\n        <module>ssm_conmon</module>\r\n        <module>ssm_dao</module>\r\n        <module>ssm_service</module>\r\n        <module>ssm_web</module>\r\n    </modules>\r\n\r\n    <!--统一版本号-->\r\n    <properties>\r\n        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\r\n        <maven.compiler.source>1.7</maven.compiler.source>\r\n        <maven.compiler.target>1.7</maven.compiler.target>\r\n        <spring.version>5.2.6.RELEASE</spring.version>\r\n        <junt.version>4.12</junt.version>\r\n        <pagehelper.version>5.1.10</pagehelper.version>\r\n        <mysql.version>5.1.47</mysql.version>\r\n        <druid.version>1.1.17</druid.version>\r\n    </properties>\r\n    <dependencyManagement>\r\n    <dependencies>\r\n        <!--导入分页插件的依赖-->\r\n        <dependency>\r\n            <groupId>com.github.pagehelper</groupId>\r\n            <artifactId>pagehelper</artifactId>\r\n            <version>${pagehelper.version}</version>\r\n        </dependency>\r\n        <!--mybatis+spring依赖-->\r\n        <!--  <dependency>\r\n            <groupId>org.mybatis</groupId>\r\n            <artifactId>mybatis-spring</artifactId>\r\n            <version>${mybatis.spring.version}</version>\r\n          </dependency>-->\r\n        <!--mysql依赖-->\r\n        <dependency>\r\n            <groupId>mysql</groupId>\r\n            <artifactId>mysql-connector-java</artifactId>\r\n            <version>${mysql.version}</version>\r\n            <scope>runtime</scope>\r\n        </dependency>\r\n        <!--druid依赖-->\r\n        <dependency>\r\n            <groupId>com.alibaba</groupId>\r\n            <artifactId>druid</artifactId>\r\n            <version>${druid.version}</version>\r\n        </dependency>\r\n        <!--mybatis依赖-->\r\n        <!-- <dependency>\r\n           <groupId>org.mybatis</groupId>\r\n           <artifactId>mybatis</artifactId>\r\n           <version>${mybatis.version}</version>\r\n         </dependency>-->\r\n        <dependency>\r\n            <groupId>log4j</groupId>\r\n            <artifactId>log4j</artifactId>\r\n            <version>1.2.17</version>\r\n        </dependency>\r\n        <!--spring依赖-->\r\n        <dependency>\r\n            <groupId>org.springframework</groupId>\r\n            <artifactId>spring-aop</artifactId>\r\n            <version>${spring.version}</version>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.springframework</groupId>\r\n            <artifactId>spring-aspects</artifactId>\r\n            <version>${spring.version}</version>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.springframework</groupId>\r\n            <artifactId>spring-tx</artifactId>\r\n            <version>${spring.version}</version>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.springframework</groupId>\r\n            <artifactId>spring-webmvc</artifactId>\r\n            <version>${spring.version}</version>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.springframework</groupId>\r\n            <artifactId>spring-web</artifactId>\r\n            <version>${spring.version}</version>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.springframework</groupId>\r\n            <artifactId>spring-core</artifactId>\r\n            <version>${spring.version}</version>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.springframework</groupId>\r\n            <artifactId>spring-beans</artifactId>\r\n            <version>${spring.version}</version>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.springframework</groupId>\r\n            <artifactId>spring-context</artifactId>\r\n            <version>${spring.version}</version>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.springframework</groupId>\r\n            <artifactId>spring-context-support</artifactId>\r\n            <version>${spring.version}</version>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.springframework</groupId>\r\n            <artifactId>spring-expression</artifactId>\r\n            <version>${spring.version}</version>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.springframework</groupId>\r\n            <artifactId>spring-jdbc</artifactId>\r\n            <version>${spring.version}</version>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>commons-logging</groupId>\r\n            <artifactId>commons-logging</artifactId>\r\n            <version>1.2</version>\r\n        </dependency>\r\n        <!--junit依赖-->\r\n        <dependency>\r\n            <groupId>junit</groupId>\r\n            <artifactId>junit</artifactId>\r\n            <version>${junt.version}</version>\r\n            <scope>test</scope>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>javax.servlet</groupId>\r\n            <artifactId>jstl</artifactId>\r\n            <version>1.2</version>\r\n            <!--<scope>provided</scope>-->\r\n        </dependency>\r\n        <!-- <dependency>\r\n           <groupId>javax.servlet</groupId>\r\n           <artifactId>servlet-api</artifactId>\r\n           <version>2.5</version>\r\n           <scope>provided</scope>\r\n         </dependency>-->\r\n        <dependency>\r\n            <groupId>javax.servlet</groupId>\r\n            <artifactId>javax.servlet-api</artifactId>\r\n            <version>4.0.1</version>\r\n            <scope>provided</scope>\r\n        </dependency>\r\n\r\n\r\n        <dependency>\r\n            <groupId>com.fasterxml.jackson.core</groupId>\r\n            <artifactId>jackson-databind</artifactId>\r\n            <version>2.11.0</version>\r\n        </dependency>\r\n\r\n        <!-- shiro-->\r\n<!--        <dependency>-->\r\n<!--          <groupId>org.apache.shiro</groupId>-->\r\n<!--          <artifactId>shiro-core</artifactId>-->\r\n<!--          <version>1.4.1</version>-->\r\n<!--        </dependency>-->\r\n\r\n<!--        <dependency>-->\r\n<!--          <groupId>org.apache.shiro</groupId>-->\r\n<!--          <artifactId>shiro-web</artifactId>-->\r\n<!--          <version>1.4.1</version>-->\r\n<!--        </dependency>-->\r\n\r\n<!--        <dependency>-->\r\n<!--          <groupId>org.apache.shiro</groupId>-->\r\n<!--          <artifactId>shiro-spring</artifactId>-->\r\n<!--          <version>1.4.1</version>-->\r\n<!--        </dependency>-->\r\n\r\n<!--        <dependency>-->\r\n<!--          <groupId>org.apache.shiro</groupId>-->\r\n<!--          <artifactId>shiro-ehcache</artifactId>-->\r\n<!--          <version>1.4.1</version>-->\r\n<!--        </dependency>-->\r\n\r\n\r\n        <!-- mybatis-plus-->\r\n        <dependency>\r\n            <groupId>com.baomidou</groupId>\r\n            <artifactId>mybatis-plus</artifactId>\r\n            <version>3.2.0</version>\r\n        </dependency>\r\n\r\n        <!-- 简化开发   提供了注解，可以通过注解在实体类创建\r\n        getter，setter方法 tostring方法-->\r\n        <dependency>\r\n            <groupId>org.projectlombok</groupId>\r\n            <artifactId>lombok</artifactId>\r\n            <version>1.18.8</version>\r\n        </dependency>\r\n\r\n        <!--   c3p0依赖-->\r\n        <dependency>\r\n            <groupId>com.mchange</groupId>\r\n            <artifactId>c3p0</artifactId>\r\n            <version>0.9.5</version>\r\n        </dependency>\r\n\r\n        <dependency>\r\n            <groupId>org.springframework</groupId>\r\n            <artifactId>spring-orm</artifactId>\r\n            <version>4.3.14.RELEASE</version>\r\n        </dependency>\r\n        <dependency>\r\n            <groupId>org.springframework</groupId>\r\n            <artifactId>spring-test</artifactId>\r\n            <version>4.3.14.RELEASE</version>\r\n            <scope>test</scope>\r\n        </dependency>\r\n\r\n        <dependency>\r\n            <groupId>commons-fileupload</groupId>\r\n            <artifactId>commons-fileupload</artifactId>\r\n            <version>1.4</version>\r\n        </dependency>\r\n    </dependencies>\r\n    </dependencyManagement>\r\n    <build>\r\n        <finalName>vue14back</finalName>\r\n        <plugins>\r\n\r\n            <!--tomcat插件-->\r\n            <plugin>\r\n                <groupId>org.apache.tomcat.maven</groupId>\r\n                <artifactId>tomcat7-maven-plugin</artifactId>\r\n                <version>2.2</version>\r\n                <configuration>\r\n                    <path>/</path>\r\n                    <port>8090</port>\r\n                </configuration>\r\n            </plugin>\r\n        </plugins>\r\n    </build>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/pom.xml b/pom.xml
+--- a/pom.xml	(revision 4e4a77e8d56d0c6f46a5efe59c08f7d38fe6a8ad)
++++ b/pom.xml	(date 1620355170850)
+@@ -227,7 +227,6 @@
+     </dependencies>
+     </dependencyManagement>
+     <build>
+-        <finalName>vue14back</finalName>
+         <plugins>
+ 
+             <!--tomcat插件-->
+Index: ssm_service/src/main/java/com/guigu/service/gys/GoodsService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.guigu.service.gys;\r\n\r\nimport com.baomidou.mybatisplus.extension.service.IService;\r\nimport com.guigu.pojo.Goods;\r\n\r\npublic interface GoodsService extends IService<Goods> {\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ssm_service/src/main/java/com/guigu/service/gys/GoodsService.java b/ssm_service/src/main/java/com/guigu/service/gys/GoodsService.java
+--- a/ssm_service/src/main/java/com/guigu/service/gys/GoodsService.java	(revision 4e4a77e8d56d0c6f46a5efe59c08f7d38fe6a8ad)
++++ b/ssm_service/src/main/java/com/guigu/service/gys/GoodsService.java	(date 1620616274157)
+@@ -1,8 +1,20 @@
+ package com.guigu.service.gys;
+ 
++import com.baomidou.mybatisplus.core.injector.methods.DeleteById;
+ import com.baomidou.mybatisplus.extension.service.IService;
+ import com.guigu.pojo.Goods;
+ 
++import java.io.Serializable;
++
+ public interface GoodsService extends IService<Goods> {
++    //根据id查询
++
++    @Override
++    Goods getById(Serializable id);
+ 
++      int DeleteById(int id);
++
++      int Update(Goods goods);
++
++      int add(Goods goods);
+ }
+Index: ssm_service/src/main/java/com/guigu/service/gys/serviceImpl/GoodsServiceImpl.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.guigu.service.gys.serviceImpl;\r\nimport com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;\r\nimport com.guigu.mapper.GoodsMapper;\r\nimport com.guigu.pojo.Goods;\r\nimport com.guigu.service.gys.GoodsService;\r\nimport org.springframework.stereotype.Service;\r\n\r\n@Service\r\npublic class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods>\r\n        implements GoodsService {\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ssm_service/src/main/java/com/guigu/service/gys/serviceImpl/GoodsServiceImpl.java b/ssm_service/src/main/java/com/guigu/service/gys/serviceImpl/GoodsServiceImpl.java
+--- a/ssm_service/src/main/java/com/guigu/service/gys/serviceImpl/GoodsServiceImpl.java	(revision 4e4a77e8d56d0c6f46a5efe59c08f7d38fe6a8ad)
++++ b/ssm_service/src/main/java/com/guigu/service/gys/serviceImpl/GoodsServiceImpl.java	(date 1620616274181)
+@@ -1,12 +1,37 @@
+ package com.guigu.service.gys.serviceImpl;
++import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+ import com.guigu.mapper.GoodsMapper;
+ import com.guigu.pojo.Goods;
+ import com.guigu.service.gys.GoodsService;
++import org.springframework.beans.factory.annotation.Autowired;
+ import org.springframework.stereotype.Service;
++import org.springframework.util.StringUtils;
+ 
+ @Service
+ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods>
+         implements GoodsService {
+ 
++    @Autowired
++    GoodsMapper goodsMapper;
++    @Override
++    public int DeleteById(int id) {
++        int i = goodsMapper.deleteById(id);
++        return i;
++    }
++
++    @Override
++    public int Update(Goods goods) {
++        //组装查询条件对象
++        QueryWrapper<Goods> queryWrapper =new QueryWrapper<Goods>();
++            queryWrapper.eq("spId",goods.getSpId());
++        int update = goodsMapper.update(goods, queryWrapper);
++        return update;
++    }
++
++    @Override
++    public int add(Goods goods) {
++        int insert = goodsMapper.insert(goods);
++        return insert;
++    }
+ }
