@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f79c3724-265f-49cd-a441-dd87eff13044" name="Default Changelist" comment="炜的框架友情提供！一键三连！" />
+    <list default="true" id="f79c3724-265f-49cd-a441-dd87eff13044" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/ssm_dao/src/main/java/com/guigu/mapper/testUserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/ssm_dao/src/main/java/com/guigu/mapper/testUserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ssm_service/src/main/java/com/guigu/service/gys/GoodsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ssm_service/src/main/java/com/guigu/service/gys/GoodsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ssm_service/src/main/java/com/guigu/service/gys/serviceImpl/GoodsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/ssm_service/src/main/java/com/guigu/service/gys/serviceImpl/GoodsServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ssm_web/src/main/java/com/guigu/controller/gys/GysXxi.java" beforeDir="false" afterPath="$PROJECT_DIR$/ssm_web/src/main/java/com/guigu/controller/gys/GysXxi.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -167,7 +172,7 @@
       <workItem from="1620401000814" duration="6159000" />
       <workItem from="1620435512786" duration="5080000" />
       <workItem from="1620473805766" duration="22000" />
-      <workItem from="1620607851810" duration="7275000" />
+      <workItem from="1620607851810" duration="7660000" />
     </task>
     <task id="LOCAL-00001" summary="骚猪炜的框架友情提供！一键三连！">
       <created>1619142969954</created>
@@ -183,7 +188,14 @@
       <option name="project" value="LOCAL" />
       <updated>1620352446264</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="炜的框架友情提供！一键三连！">
+      <created>1620618530951</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1620618530951</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
