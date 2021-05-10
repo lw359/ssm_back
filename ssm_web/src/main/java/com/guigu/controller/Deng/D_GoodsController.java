@@ -29,7 +29,7 @@ public class D_GoodsController {
     public IPage<D_goodstype> showAll(@RequestParam(value = "pageno",defaultValue = "1") int pageno,
                                       @RequestParam(value = "pagesize",defaultValue = "5")int pagesize,
                                       String KindName){
-//组装查询条件对象
+        //组装查询条件对象
         QueryWrapper<D_goodstype> queryWrapper =new QueryWrapper<D_goodstype>();
         if(!StringUtils.isEmpty(KindName)){
             queryWrapper.like("Kind_Name",KindName);  // where  name like '%val%'
