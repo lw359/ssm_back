@@ -1,2 +1,9 @@
+<<<<<<< HEAD
 com\guigu\service\gys\GoodsService.class
 com\guigu\service\gys\serviceImpl\GoodsServiceImpl.class
+=======
+com\guigu\service\gys\serviceImpl\GoodsServiceImpl.class
+com\guigu\service\Deng\D_goodstypeService.class
+com\guigu\service\gys\GoodsService.class
+com\guigu\service\Deng\impl\D_goodstypeServiceImpl.class
+>>>>>>> origin/master
