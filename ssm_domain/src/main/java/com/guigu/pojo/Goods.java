@@ -21,15 +21,17 @@ public class Goods {
     private int spTypeId;
     @TableField("goodsName")
     private String goodsName;
-
+    @TableField("price")
     private float price;
-
+    @TableField("sl")
     private int sl;
-
+    @TableField("img")
     private String img;
     @TableField("purchasePrice")
     private int purchasePrice;
+    @TableField("color")
     private String color;
+    @TableField("size")
     private String size;
     @TableField("thTime")
     private Date thTime;

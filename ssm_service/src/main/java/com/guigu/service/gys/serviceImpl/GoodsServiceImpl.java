@@ -6,7 +6,6 @@ import com.guigu.pojo.Goods;
 import com.guigu.service.gys.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 @Service
 public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods>
