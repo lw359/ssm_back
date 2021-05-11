@@ -4,7 +4,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.guigu.mapper.Deng.D_goddsStypeMapper;
+import com.guigu.mapper.Deng.D_gongyingshangMapper;
+import com.guigu.mapper.Deng.D_merchantMapper;
+import com.guigu.pojo.Deng.D_gongyingshangPojo;
 import com.guigu.pojo.Deng.D_goodstype;
+import com.guigu.pojo.Deng.D_merchantPojo;
 import com.guigu.service.Deng.D_goodstypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -12,7 +16,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import sun.tools.jconsole.JConsole;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -22,6 +27,12 @@ public class D_GoodsController {
 
     @Autowired
     D_goddsStypeMapper d_goddsStypeMapper;
+
+    @Autowired
+    D_merchantMapper d_merchantMapper;
+
+    @Autowired
+    D_gongyingshangMapper d_gongyingshangMapper;
 
     //查询所有数据
     @RequestMapping("/show.action")
@@ -68,5 +79,26 @@ public class D_GoodsController {
     @CrossOrigin
     public int deleteGoods(Integer id){
         return d_goddsStypeMapper.deleteById(id);
+    }
+
+    //查询所有的商品分类信息
+    @RequestMapping("/showAllSp.action")
+    @CrossOrigin
+    public List<D_goodstype> showAllSp(){
+        return d_goddsStypeMapper.selectList(null);
+    }
+
+    //查询所有的供应商信息
+    @RequestMapping("/showAllGys.action")
+    @CrossOrigin
+    public List<D_gongyingshangPojo> showAllGys(){
+        return d_gongyingshangMapper.selectList(null);
+    }
+
+    //查询所有的商户信息
+    @RequestMapping("/showAllSh.action")
+    @CrossOrigin
+    public List<D_merchantPojo> showAllSh(){
+        return d_merchantMapper.selectList(null);
     }
 }
