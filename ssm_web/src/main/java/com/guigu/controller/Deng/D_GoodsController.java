@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import sun.tools.jconsole.JConsole;
 
 @RestController
 @CrossOrigin
@@ -28,11 +27,11 @@ public class D_GoodsController {
     @CrossOrigin
     public IPage<D_goodstype> showAll(@RequestParam(value = "pageno",defaultValue = "1") int pageno,
                                       @RequestParam(value = "pagesize",defaultValue = "5")int pagesize,
-                                      String KindName){
-        //组装查询条件对象
+                                      D_goodstype d_goodstype){
+//组装查询条件对象
         QueryWrapper<D_goodstype> queryWrapper =new QueryWrapper<D_goodstype>();
-        if(!StringUtils.isEmpty(KindName)){
-            queryWrapper.like("Kind_Name",KindName);  // where  name like '%val%'
+        if(!StringUtils.isEmpty(d_goodstype.getKindName())){
+            queryWrapper.like("Kind_Name",d_goodstype.getKindName());  // where  name like '%val%'
         }
         queryWrapper.orderByAsc("spTypeId");  //根据id列进行排序
         IPage<D_goodstype>  iPage= d_goodstypeService.page(new Page<D_goodstype>(pageno,pagesize),queryWrapper);
@@ -50,23 +49,7 @@ public class D_GoodsController {
     @RequestMapping("/updateByGoods.action")
     @CrossOrigin
     public int updateByGoods(D_goodstype d_goodstype){
-        //组装查询条件对象
-        QueryWrapper<D_goodstype> queryWrapper =new QueryWrapper<D_goodstype>();
-        queryWrapper.eq("spTypeId",d_goodstype.getSpTypeId());
-        return  d_goddsStypeMapper.update(d_goodstype,queryWrapper);
-    }
-
-    //添加分类信息
-    @RequestMapping("/addGoods.action")
-    @CrossOrigin
-    public int addGoods(D_goodstype d_goodstype) {
-        return d_goddsStypeMapper.insert(d_goodstype);
-    }
-
-    //根据id删除商品信息
-    @RequestMapping("/deleteGoods.action")
-    @CrossOrigin
-    public int deleteGoods(Integer id){
-        return d_goddsStypeMapper.deleteById(id);
+        System.out.println(d_goodstype);
+        return  d_goddsStypeMapper.update(d_goodstype,new QueryWrapper<D_goodstype>());
     }
 }
