@@ -24,5 +24,4 @@ public class D_goodstype {
     @TableField("Kind_jibie")
     private String kindjibie;
 
-
 }

@@ -9,10 +9,7 @@ import com.guigu.service.gys.serviceImpl.GoodsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
@@ -60,6 +57,7 @@ public class GysXxi {
     }
 
     @RequestMapping("addSp.action")
+    @ResponseBody
     public int addgoods (Goods goods){
             goods.setYsTime(new Date());
         int add = goodsService.add(goods);
