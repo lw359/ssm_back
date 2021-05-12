@@ -12,7 +12,7 @@ public class D_gongyingshangPojo {
     @TableId(value = "gysId",type = IdType.AUTO)
     private int gysId;
     @TableField("sup_id")
-    private int supId;
+    private String supId;
     @TableField("gysName")
     private String gysName;
     @TableField("phone")
