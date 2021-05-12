@@ -23,7 +23,7 @@ public class D_permissionsController {
 
     //登录界面
     @RequestMapping("/longin.action")
-    @CrossOrigin
+    @CrossOrigin(origins="*")
     public int login(String username,String password){
         Map<String,Object> columnMap = new HashMap<>();
         columnMap.put("emp_no", username);
