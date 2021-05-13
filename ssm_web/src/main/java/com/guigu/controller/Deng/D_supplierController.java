@@ -91,4 +91,33 @@ public class D_supplierController {
         return d_gongyingshangMapper.selectList(null);
     }
 
+    //根据id查询供应商
+    @RequestMapping("/queryByidGys.action")
+    @CrossOrigin
+    public D_gongyingshangPojo queryByidGys(Integer gysId){
+        return d_gongyingshangMapper.selectById(gysId);
+    }
+
+    //修改供应商信息
+    @RequestMapping("/updateGyingshang.action")
+    @CrossOrigin
+    public int updateTenance(D_gongyingshangPojo d_gongyingshang){
+        //组装查询条件对象
+        QueryWrapper<D_gongyingshangPojo> queryWrapper =new QueryWrapper<D_gongyingshangPojo>();
+        queryWrapper.eq("gysId",d_gongyingshang.getGysId());
+        return  d_gongyingshangMapper.update(d_gongyingshang,queryWrapper);
+    }
+    //添加供应商
+    @RequestMapping("/addSupplier.action")
+    @CrossOrigin
+    public int addSupplier(D_gongyingshangPojo d_gongyingshangPojo){
+        d_gongyingshangPojo.setAuditState("G-001");
+        return d_gongyingshangMapper.insert(d_gongyingshangPojo);
+    }
+    //删除供应商
+    @RequestMapping("/deleteGysh.action")
+    @CrossOrigin
+    public int deleteGysh(Integer gysId){
+        return d_gongyingshangMapper.deleteById(gysId);
+    }
 }

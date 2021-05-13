@@ -13,7 +13,7 @@ public class D_gongyingshangPojo {
     private int gysId;
     @TableField("sup_id")
     private String supId;
-    @TableField("gysName")
+    @TableField("gysname")
     private String gysName;
     @TableField("phone")
     private String phone;
