@@ -1,3 +1,5 @@
+com\guigu\service\Deng\D_merchantService.class
+com\guigu\service\Deng\impl\D_merchantServiceImpl.class
 com\guigu\service\Deng\impl\D_goodstypeServiceImpl.class
 com\guigu\service\gys\serviceImpl\DingDanServiceImpl.class
 com\guigu\service\Deng\impl\D_supllierServiceImpl.class

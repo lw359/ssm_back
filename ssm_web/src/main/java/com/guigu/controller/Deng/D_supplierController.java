@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.guigu.mapper.Deng.D_gongyingshangMapper;
 import com.guigu.pojo.Deng.D_gongyingshangPojo;
-import com.guigu.pojo.Goods;
 import com.guigu.service.Deng.D_supplierService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -14,6 +13,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -28,7 +29,21 @@ public class D_supplierController {
     @RequestMapping("/showAllSupplier.action")
     @CrossOrigin
     public IPage<D_gongyingshangPojo> showAll(@RequestParam(value = "pageno",defaultValue = "1") int pageno,
-                                @RequestParam(value = "pagesize",defaultValue = "5")int pagesize){
+                                @RequestParam(value = "pagesize",defaultValue = "5")int pagesize,
+                                              String audit_state){
+        //组装查询条件对象
+        QueryWrapper<D_gongyingshangPojo> queryWrapper =new QueryWrapper<D_gongyingshangPojo>();
+        queryWrapper.orderByAsc("gysId").like("audit_state",audit_state);  //根据id列进行排序
+        IPage<D_gongyingshangPojo>  iPage= d_supplierService.page(new Page<D_gongyingshangPojo>(pageno,pagesize),queryWrapper);
+        return iPage;
+    }
+
+    //查询所有数据
+    @RequestMapping("/showAllSup.action")
+    @CrossOrigin
+    public IPage<D_gongyingshangPojo> showAllSup(@RequestParam(value = "pageno",defaultValue = "1") int pageno,
+                                              @RequestParam(value = "pagesize",defaultValue = "5")int pagesize
+                                             ){
         //组装查询条件对象
         QueryWrapper<D_gongyingshangPojo> queryWrapper =new QueryWrapper<D_gongyingshangPojo>();
         queryWrapper.orderByAsc("gysId");  //根据id列进行排序
@@ -68,4 +83,12 @@ public class D_supplierController {
         queryWrapper.eq("gysId",d_gongyingshangPojo.getGysId());
         return  d_gongyingshangMapper.update(d_gongyingshangPojo,queryWrapper);
     }
+
+    //查询所有的供应商
+    @RequestMapping("/showAllGys.action")
+    @CrossOrigin
+    public List<D_gongyingshangPojo> showAllGys(){
+        return d_gongyingshangMapper.selectList(null);
+    }
+
 }
