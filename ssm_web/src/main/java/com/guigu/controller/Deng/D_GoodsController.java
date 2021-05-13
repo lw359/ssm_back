@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin
 public class D_GoodsController {
@@ -67,5 +69,12 @@ public class D_GoodsController {
     @CrossOrigin
     public int deleteGoods(Integer id){
         return d_goddsStypeMapper.deleteById(id);
+    }
+
+    //查询所有的分类级别
+    @RequestMapping("/showAllSp.action")
+    @CrossOrigin
+    public List<D_goodstype> showAllSp(){
+        return d_goddsStypeMapper.selectList(null);
     }
 }
