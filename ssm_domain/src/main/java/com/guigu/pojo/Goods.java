@@ -47,6 +47,7 @@ public class Goods {
     private String spStat;
     @TableField("sHId")
     private int sHId;
+    private int stock;
 
 
 }
