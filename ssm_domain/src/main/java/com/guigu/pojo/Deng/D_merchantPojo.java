@@ -23,5 +23,8 @@ public class D_merchantPojo {
     private int yl;
     @TableField("ddId")
     private int ddId;
-
+    @TableField("mer_state")
+    private String merstate;
+    @TableField("shhulxr")
+    private String shhulxr;
 }
