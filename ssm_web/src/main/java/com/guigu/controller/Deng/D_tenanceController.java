@@ -68,4 +68,5 @@ public class D_tenanceController {
         queryWrapper.eq("spId",goods.getSpId());
         return  goodsMapper.update(goods,queryWrapper);
     }
+
 }

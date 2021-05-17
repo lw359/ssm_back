@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.guigu.mapper.Deng.D_warehouseGoodsMapper" >
+
+    <select id="warehouseAll" resultType="com.guigu.pojo.Deng.D_warehouseGoodsPojo" parameterType="com.guigu.pojo.Deng.D_warehousePojo">
+        SELECT  warehouse.`id`,warehouse.`kcName`,warehouse.`maxKc`,warehouse.`minKc`,warehouse.`AMOUNT`,warehouse.`max_amount`,warehouse.`REGISTER`,warehouse.`REGISTER_TIME`
+             ,goods.`goodsName` FROM `warehouse`  INNER JOIN `goods` ON warehouse.`spId`=goods.`spId`
+    </select>
+
+    <select id="warehouseName"  resultType="com.guigu.pojo.Deng.D_warehouseGoodsPojo" parameterType="java.lang.String">
+
+        SELECT  warehouse.`id`,warehouse.`kcName`,warehouse.`maxKc`,warehouse.`minKc`,warehouse.`AMOUNT`,warehouse.`max_amount`,warehouse.`REGISTER`,warehouse.`REGISTER_TIME`
+             ,goods.`goodsName` FROM `warehouse`  INNER JOIN `goods` ON warehouse.`spId`=goods.`spId`
+        <where>
+        <if test="kcName!=null and kcName!=''">
+            and warehouse.`kcName` like concat('%',#{kcName},'%')
+        </if>
+        </where>
+    </select>
+
+<!--    <select id="warehouseById" resultType="com.guigu.pojo.Deng.D_warehouseGoodsPojo" parameterType="int">-->
+<!--        SELECT  warehouse.`id`,warehouse.`kcName`,warehouse.`maxKc`,warehouse.`minKc`,warehouse.`AMOUNT`,warehouse.`max_amount`,-->
+<!--                warehouse.`REGISTER`,warehouse.`REGISTER_TIME`-->
+<!--                ,goods.`goodsName` FROM `warehouse`  INNER JOIN `goods` ON warehouse.`spId`=goods.`spId` WHERE goods.spId=#{spId}-->
+<!--                </select>-->
+
+</mapper>
