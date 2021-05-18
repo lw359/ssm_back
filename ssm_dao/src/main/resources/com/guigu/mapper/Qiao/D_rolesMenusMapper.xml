@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.guigu.mapper.Qiao.Q_rolesMenusMapper" >
+
+    <!--查询权限-->
+    <select id="PermissionAll" resultType="com.guigu.pojo.Qiao.Q_rolesMenusPojo" parameterType="com.guigu.pojo.Qiao.Q_rolesMenusPojo">
+        SELECT yg.`uid`,qx.* FROM `yuangong` yg
+        INNER JOIN `userrole` jsyg
+        ON yg.`uid` = jsyg.`uid`
+        INNER JOIN roles js
+        ON js.`rid` = jsyg.`rid`
+        INNER JOIN `menurole` cd
+        ON cd.`rid` = js.`rid`
+        INNER JOIN `menus` qx
+        ON qx.`mid`= cd.`mid`
+
+        <where>
+            AND qx.start = '0'
+            <if test="parentid==0">
+                and  yg.`uid` = #{uid}
+                AND qx.parentid = #{parentid}
+            </if>
+            <if test="parentid==1">
+                and  yg.`uid` = #{uid}
+                and qx.`seq`=#{mid}
+            </if>
+            <if test="parentid==2">
+                and  yg.`uid` = #{uid}
+                and qx.`seq`=#{mid}
+            </if>
+        </where>
+        ORDER BY qx.mid ASC
+    </select>
+
+
+    <select id="PermissionFYAll" resultType="com.guigu.pojo.Qiao.Q_rolesMenusPojo" parameterType="com.guigu.pojo.Qiao.Q_rolesMenusPojo">
+        SELECT yg.`uid`,qx.* FROM `yuangong` yg
+        INNER JOIN `userrole` jsyg
+        ON yg.`uid` = jsyg.`uid`
+        INNER JOIN roles js
+        ON js.`rid` = jsyg.`rid`
+        INNER JOIN `menurole` cd
+        ON cd.`rid` = js.`rid`
+        INNER JOIN `menus` qx
+        ON qx.`mid`= cd.`mid`
+        <where>
+            AND qx.start = '0'
+            <if test="mid==0">
+                and  yg.`uid` = #{uid}
+                AND qx.parentid = #{parentid}
+            </if>
+            <if test="parentid==0">
+                and  yg.`uid` = #{uid}
+                AND qx.parentid = #{parentid}
+            </if>
+            <if test="parentid==1 and mid!=0">
+                and  yg.`uid` = #{uid}
+                and qx.`seq`=#{mid}
+                AND qx.parentid = #{parentid}
+            </if>
+            <if test="parentid==2 and mid!=0">
+                and  yg.`uid` = #{uid}
+                and qx.`seq`=#{mid}
+                AND qx.parentid = #{parentid}
+            </if>
+        </where>
+        ORDER BY qx.mid ASC
+    </select>
+
+
+    <select id="qxjsAll" parameterType="com.guigu.pojo.Qiao.Q_rolesMenusPojo" resultType="com.guigu.pojo.Qiao.Q_rolesMenusPojo">
+        SELECT qx.* FROM roles r INNER JOIN `menurole` jsqx
+                                            ON r.rid = jsqx.rid
+                                 INNER JOIN menus qx
+                                            ON qx.mid = jsqx.mid
+        WHERE r.rid =#{rid}
+    </select>
+
+
+    <delete id="qxdelete" parameterType="java.lang.Integer">
+        delete from menurole where mid = #{mid}
+    </delete>
+</mapper>
