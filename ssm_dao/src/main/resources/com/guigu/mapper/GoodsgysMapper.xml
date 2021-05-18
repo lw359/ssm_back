@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.guigu.mapper.GoodsgysMapper" >
+
+    <select id="dangegoods" resultType="com.guigu.pojo.Goodsgys" parameterType="int">
+  SELECT  gysh.gysName ,gs.goodsName ,gs.price ,gs.img FROM goods gs INNER JOIN gongyingshang gysh ON gs.gysId=gysh.gysId WHERE spId=#{spId}
+    </select>
+
+</mapper>
