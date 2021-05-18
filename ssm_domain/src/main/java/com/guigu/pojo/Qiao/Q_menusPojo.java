@@ -7,14 +7,18 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 @Data
-@TableName("roles")
-public class Q_rolesPojo {
-    @TableId(value = "rid",type = IdType.AUTO)
-    private int rid;
+@TableName("menus")
+public class Q_menusPojo {
+    @TableId(value = "mid",type = IdType.AUTO)
+    private int mid;
+    @TableField("parentid")
+    private String parentid;
+    @TableField("seq")
+    private int seq;
     @TableField("name")
     private String name;
-    @TableField("code")
-    private String code;
+    @TableField("url")
+    private String url;
     @TableField("descn")
     private String descn;
 }

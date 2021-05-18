@@ -28,7 +28,9 @@ public class D_permissionsController {
         Map<String,Object> columnMap = new HashMap<>();
         columnMap.put("emp_no", username);
         columnMap.put("password", password);
+
         List<D_yuangongPojo> d_yuangongPojos = d_yuangongMapper.selectByMap(columnMap);
+        System.out.println(d_yuangongPojos);
        if (d_yuangongPojos.size()>0){
            return 1;
        }else return 0;

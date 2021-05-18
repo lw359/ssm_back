@@ -3,11 +3,8 @@ package com.guigu.controller.Qiao;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.guigu.mapper.Deng.D_usersMapper;
 import com.guigu.mapper.Qiao.Q_rolesMapper;
-import com.guigu.pojo.Deng.D_usersPojo;
 import com.guigu.pojo.Qiao.Q_rolesPojo;
-import com.guigu.service.Deng.D_usersService;
 import com.guigu.service.Qiao.Q_rolesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -33,7 +30,7 @@ public class Q_rolesController {
                                 ){
         //组装查询条件对象
         QueryWrapper<Q_rolesPojo> queryWrapper =new QueryWrapper<Q_rolesPojo>();
-        queryWrapper.orderByAsc("ID");  //根据id列进行排序
+        queryWrapper.orderByAsc("rid");  //根据id列进行排序
         IPage<Q_rolesPojo>  iPage= q_rolesService.page(new Page<Q_rolesPojo>(pageno,pagesize),queryWrapper);
         return iPage;
     }
@@ -50,7 +47,7 @@ public class Q_rolesController {
         if(!StringUtils.isEmpty(name)){
             queryWrapper.like("name",name);  // where  name like '%val%'
         }
-        queryWrapper.orderByAsc("ID");  //根据id列进行排序
+        queryWrapper.orderByAsc("rid");  //根据id列进行排序
         IPage<Q_rolesPojo>  iPage= q_rolesService.page(new Page<Q_rolesPojo>(pageno,pagesize),queryWrapper);
         return iPage;
     }
@@ -66,15 +63,15 @@ public class Q_rolesController {
     //删除角色
     @RequestMapping("/deleteRoles.action")
     @CrossOrigin
-    public int deleteRoles(Integer id){
-        return q_rolesMapper.deleteById(id);
+    public int deleteRoles(Integer rid){
+        return q_rolesMapper.deleteById(rid);
     }
 //
     //根据id查询用户
     @RequestMapping("/queryByidRoles.action")
     @CrossOrigin
-    public Q_rolesPojo queryByidRoles(Integer id){
-        return q_rolesMapper.selectById(id);
+    public Q_rolesPojo queryByidRoles(Integer rid){
+        return q_rolesMapper.selectById(rid);
     }
 //
     //修改商品
@@ -83,7 +80,7 @@ public class Q_rolesController {
     public int updateRoles(Q_rolesPojo q_rolesPojo){
         //组装查询条件对象
         QueryWrapper<Q_rolesPojo> queryWrapper =new QueryWrapper<Q_rolesPojo>();
-        queryWrapper.eq("id",q_rolesPojo.getId());
+        queryWrapper.eq("rid",q_rolesPojo.getRid());
         return  q_rolesMapper.update(q_rolesPojo,queryWrapper);
     }
 }
